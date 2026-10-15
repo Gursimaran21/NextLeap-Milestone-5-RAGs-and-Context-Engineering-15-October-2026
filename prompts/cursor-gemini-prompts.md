@@ -625,9 +625,10 @@ After the guard, unpack:
   ins, ctx, p, fx, df = R["insights"], R["context"], R["pulse"], R["explainer"], R["df"]
 Then a title, a st.caption showing the window (ins["window_start"] → ins["window_end"]),
 the source file and the writer (Gemini vs offline), and 4 metric columns (st.metric):
-  Reviews analysed = ins["total_reviews"]; Window = f"{ins['window_weeks']} wks";
-  Avg rating = ins["avg_rating"] (delta "out of 5", delta_color "off");
-  Fee issue evidence = ins["fee_issue"]["evidence_count"].
+  Reviews Analysed = ins["total_reviews"]; Window = f"{ins['window_weeks']} wks";
+  Avg Rating = f"{ins['avg_rating']} out of 5"; Fee Issue Evidence = ins["fee_issue"]["evidence_count"].
+Keep "out of 5" inline in the value (no delta) so the Avg Rating box is the same height as the
+other three.
 ```
 
 ### S8 — Tab container
