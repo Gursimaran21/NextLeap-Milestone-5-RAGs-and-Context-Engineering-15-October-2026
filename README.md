@@ -1,5 +1,7 @@
 # Groww — Milestone 5: Review Insights Analyser
 
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
 **Product:** Groww · **One-liner:** turn 8–12 weeks of public App Store + Play Store reviews
 into (a) a weekly internal product pulse, (b) a customer-facing fee explainer, then push both
 into internal tools through **MCP with a human approval gate**.
@@ -245,3 +247,8 @@ Full table: `docs/sources.md`.
 | 5 | Reviews CSV sample | `data/groww_reviews_sample.csv` |
 | 6 | Source list (4–6 URLs) | `docs/sources.md` |
 | 7 | README | this file |
+
+## License
+
+Released under the **MIT License** — see [`LICENSE`](LICENSE).
+Copyright (c) 2026 Gursimaran21.
