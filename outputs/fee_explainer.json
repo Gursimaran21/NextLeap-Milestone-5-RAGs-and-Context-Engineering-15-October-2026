@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-10-15T07:48:09.819426+00:00",
+  "label": "Exit Load on Mutual Fund Redemption",
+  "bullets": [
+    "An exit load is a fee charged by Asset Management Companies (AMCs) when you redeem (sell) mutual fund units before completing a specified minimum holding period.",
+    "The portfolio value displayed in the app shows your gross investment value calculated using the latest Net Asset Value (NAV), which does not pre-deduct conditional exit loads.",
+    "If you redeem units before the required holding period ends, the AMC deducts the applicable exit load percentage from the redemption proceeds before remitting the remaining net balance to your bank account.",
+    "Redemptions follow a First-In, First-Out (FIFO) sequence, meaning your oldest units are redeemed first, and each purchase tranche or Systematic Investment Plan (SIP) installment is evaluated individually against its own holding period.",
+    "If you redeem your units after the specified exit load period has passed, no exit load is charged and the full redemption value (subject to applicable taxes) is credited.",
+    "The specific exit load percentage and applicable holding period for any fund are disclosed in the Scheme Information Document (SID), Key Information Memorandum (KIM), and on the fund details page within the app."
+  ],
+  "sources": [
+    {
+      "name": "AMFI \u2014 Exit Load (Investor Corner)",
+      "url": "https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html",
+      "supports": "Definition of exit load, how it is applied on redemption"
+    },
+    {
+      "name": "SEBI \u2014 Investor Education",
+      "url": "https://investor.sebi.gov.in/",
+      "supports": "Regulator's plain-language explainers on mutual fund charges"
+    }
+  ],
+  "last_checked": "2026-10-15",
+  "markdown": "# Exit Load on Mutual Fund Redemption \u2014 Explained\n\n1. An exit load is a fee charged by Asset Management Companies (AMCs) when you redeem (sell) mutual fund units before completing a specified minimum holding period.\n2. The portfolio value displayed in the app shows your gross investment value calculated using the latest Net Asset Value (NAV), which does not pre-deduct conditional exit loads.\n3. If you redeem units before the required holding period ends, the AMC deducts the applicable exit load percentage from the redemption proceeds before remitting the remaining net balance to your bank account.\n4. Redemptions follow a First-In, First-Out (FIFO) sequence, meaning your oldest units are redeemed first, and each purchase tranche or Systematic Investment Plan (SIP) installment is evaluated individually against its own holding period.\n5. If you redeem your units after the specified exit load period has passed, no exit load is charged and the full redemption value (subject to applicable taxes) is credited.\n6. The specific exit load percentage and applicable holding period for any fund are disclosed in the Scheme Information Document (SID), Key Information Memorandum (KIM), and on the fund details page within the app.\n\n**Sources**\n- AMFI \u2014 Exit Load (Investor Corner): https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html\n- SEBI \u2014 Investor Education: https://investor.sebi.gov.in/\n\nLast checked: 2026-10-15",
+  "llm": true
+}

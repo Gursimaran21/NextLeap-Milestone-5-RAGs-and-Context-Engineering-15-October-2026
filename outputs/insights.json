@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-10-15T07:48:09.819426+00:00",
+  "window_weeks": 12,
+  "window_start": "2026-07-16",
+  "window_end": "2026-10-08",
+  "total_reviews": 40,
+  "avg_rating": 2.42,
+  "source_file": "groww_reviews_sample.csv",
+  "theme_distribution": [
+    {
+      "theme": "Charges & Fees",
+      "count": 17,
+      "share_pct": 42.5
+    },
+    {
+      "theme": "Payments & SIP",
+      "count": 6,
+      "share_pct": 15.0
+    },
+    {
+      "theme": "Onboarding & KYC",
+      "count": 6,
+      "share_pct": 15.0
+    },
+    {
+      "theme": "Statements & Reports",
+      "count": 6,
+      "share_pct": 15.0
+    },
+    {
+      "theme": "Withdrawals & Redemption",
+      "count": 5,
+      "share_pct": 12.5
+    }
+  ],
+  "top_themes": [
+    "Charges & Fees",
+    "Payments & SIP",
+    "Onboarding & KYC"
+  ],
+  "top_quotes": [
+    {
+      "text": "Withdrawal charges unclear Withdrawal from my trading balance took long and I am still unsure if any charges applied.",
+      "rating": 2,
+      "date": "2026-08-27",
+      "week": "Aug 27",
+      "theme": "Charges & Fees"
+    },
+    {
+      "text": "SIP failed no reason My SIP failed twice this month with no clear reason and no proper message. Money was also not debited.",
+      "rating": 1,
+      "date": "2026-07-22",
+      "week": "Jul 22",
+      "theme": "Payments & SIP"
+    },
+    {
+      "text": "Charged more than expected When I redeemed, the credited amount was less than shown. Please explain exit load clearly in the app.",
+      "rating": 1,
+      "date": "2026-08-06",
+      "week": "Aug 06",
+      "theme": "Charges & Fees"
+    }
+  ],
+  "fee_issue": {
+    "label": "Exit Load on Mutual Fund Redemption",
+    "term": "exit load",
+    "evidence_count": 14,
+    "matched_keywords": [
+      "exit load",
+      "amount credited less",
+      "less than shown",
+      "less than the value",
+      "deducted",
+      "deduction",
+      "hidden charge",
+      "hidden charges",
+      "no clear fee",
+      "fee breakdown",
+      "charges unclear"
+    ],
+    "sample_snippets": [
+      "Exit load confusion Redeemed my mutual fund and got less than the value shown in the app. Nobody told me about exit load. Where did the\u2026",
+      "Clean app but charges unclear Nice clean app and easy to invest. The charges and fees section could be much clearer.",
+      "Exit load not shown before redeeming There is no clear warning about exit load before I redeem. Very confusing for a new investor like me."
+    ]
+  }
+}

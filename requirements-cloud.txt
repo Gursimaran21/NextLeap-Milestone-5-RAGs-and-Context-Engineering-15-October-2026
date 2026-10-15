@@ -1,0 +1,4 @@
+# Used ONLY for Streamlit Community Cloud (point the app's "Requirements file" here).
+# Locally, `pip install -r requirements.txt` is enough; Gemini is optional.
+-r requirements.txt
+google-genai>=0.3
