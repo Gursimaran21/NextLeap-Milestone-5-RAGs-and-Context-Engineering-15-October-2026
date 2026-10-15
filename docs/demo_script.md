@@ -19,6 +19,20 @@ Record with the Streamlit app already running: `streamlit run app.py`
 | 2:40 | **Deliverables** tab | "Compliance checklist is green: ≤5 themes, ≤250 words, 3 quotes, ≤6 bullets, 2 sources, approval gate." |
 | 2:50 | Terminal: `python -m src.run_all --weeks 12` | "For a new week, drop the new export in `data/` and re-run one command." |
 
+## Key screenshots
+
+**Review Intelligence** (0:40–1:20) — top-3 themes, 3 verbatim redacted quotes, and the recurring
+fee pain point with the retrieved RAG context:
+
+![Review Intelligence tab — live run](img/02-review-intelligence.png)
+
+**MCP Approval** (2:05–2:25) — the exact payload is shown and *nothing* runs until you click
+**Approve & Execute** (the click is the human approval token):
+
+![MCP approval payload — nothing written yet](img/05-mcp-approval-payload.png)
+
+Full set (landing, weekly pulse, fee explainer, deliverables) in [`img/`](img/README.md).
+
 ## Tips
 - Have `outputs/notes_doc.md` and `outputs/email_draft.eml` open in a second window to show the artifacts.
 - If asked "is this real MCP?" → the app uses `src/mcp_tools.py` (mirrors the MCP tools). `mcp/server.py`
