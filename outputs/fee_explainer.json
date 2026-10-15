@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-15T09:04:08.535834+00:00",
+  "generated_at": "2026-10-15T11:22:01.393124+00:00",
   "label": "Exit Load on Mutual Fund Redemption",
   "bullets": [
     "Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.",
@@ -11,17 +11,17 @@
   ],
   "sources": [
     {
-      "name": "AMFI \u2014 Exit Load (Investor Corner)",
-      "url": "https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html",
-      "supports": "Definition of exit load, how it is applied on redemption"
+      "name": "AMFI \u2014 Expense Ratio (Investor Corner)",
+      "url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+      "supports": "What the Total Expense Ratio is, its components, and SEBI Regulation 52 limits"
     },
     {
-      "name": "SEBI \u2014 Investor Education",
-      "url": "https://investor.sebi.gov.in/",
-      "supports": "Regulator's plain-language explainers on mutual fund charges"
+      "name": "SEBI Investor \u2014 Exit Load",
+      "url": "https://investor.sebi.gov.in/exit_load.html",
+      "supports": "Definition of exit load, how it reduces the redemption amount, worked example"
     }
   ],
   "last_checked": "2026-10-15",
-  "markdown": "# Exit Load on Mutual Fund Redemption \u2014 Explained\n\n1. Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.\n2. It is charged by the fund scheme, not by Groww, and is deducted from your redemption proceeds.\n3. It is calculated as a percentage of the redeemed value, so the credited amount can be lower than the value shown.\n4. Each scheme sets its own exit load and holding period; check the scheme's Scheme Information Document.\n5. For most equity schemes the holding period is 1 year, but this varies by scheme.\n6. There is no exit load after the holding period defined by the scheme.\n\n**Sources**\n- [AMFI \u2014 Exit Load (Investor Corner)](https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html)\n- [SEBI \u2014 Investor Education](https://investor.sebi.gov.in/)\n\nLast checked: 2026-10-15",
+  "markdown": "# Exit Load on Mutual Fund Redemption \u2014 Explained\n\n1. Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.\n2. It is charged by the fund scheme, not by Groww, and is deducted from your redemption proceeds.\n3. It is calculated as a percentage of the redeemed value, so the credited amount can be lower than the value shown.\n4. Each scheme sets its own exit load and holding period; check the scheme's Scheme Information Document.\n5. For most equity schemes the holding period is 1 year, but this varies by scheme.\n6. There is no exit load after the holding period defined by the scheme.\n\n**Sources**\n- [AMFI \u2014 Expense Ratio (Investor Corner)](https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio)\n- [SEBI Investor \u2014 Exit Load](https://investor.sebi.gov.in/exit_load.html)\n\nLast checked: 2026-10-15",
   "llm": false
 }

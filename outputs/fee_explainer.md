@@ -8,7 +8,7 @@
 6. There is no exit load after the holding period defined by the scheme.
 
 **Sources**
-- [AMFI — Exit Load (Investor Corner)](https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html)
-- [SEBI — Investor Education](https://investor.sebi.gov.in/)
+- [AMFI — Expense Ratio (Investor Corner)](https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio)
+- [SEBI Investor — Exit Load](https://investor.sebi.gov.in/exit_load.html)
 
 Last checked: 2026-10-15

@@ -118,8 +118,8 @@ Use `from __future__ import annotations`, type hints, and pathlib.
 
 5) SOURCES:
    SOURCES: 4-6 dicts {name, url, supports} for official, non-login pages —
-     AMFI exit load, SEBI investor education, Groww exit load, Groww pricing,
-     AMFI TER, NSE investor education.
+     AMFI charges/TER, SEBI exit load, SEBI investor education,
+     Groww exit load, Groww pricing, NSE investor education.
    EXPLAINER_SOURCE_NAMES: exactly 2 names from that list (the ones the explainer injects).
    def explainer_sources() -> list[dict[str, str]]: return those 2 entries.
 
@@ -379,7 +379,7 @@ Hard rules:
   Last checked: {today in YYYY-MM-DD}
 
 - Include exactly 2 official source links: take them from config.explainer_sources()
-  (which returns 2 entries from config.SOURCES — AMFI exit load, SEBI investor education).
+  (which returns 2 entries from config.SOURCES — AMFI expense ratio, SEBI exit load).
 - Bullets must map to what users are confused about in the reviews (e.g. why the credited
   amount is lower than the value shown).
 - No PII. No usernames.
@@ -391,7 +391,7 @@ Hard rules:
 ```bash
 python -m src.fee_explainer
 python -c "import json; d=json.load(open('outputs/fee_explainer.json')); print(d['label'], len(d['bullets']), [s['name'] for s in d['sources']], d['last_checked'], d['llm'], list(d.keys()))"
-# expect: 'Exit Load on Mutual Fund Redemption' <=6 ['AMFI — Exit Load (Investor Corner)','SEBI — Investor Education'] <date> True/False
+# expect: 'Exit Load on Mutual Fund Redemption' <=6 ['AMFI — Expense Ratio (Investor Corner)','SEBI Investor — Exit Load'] <date> True/False
 #         keys ['generated_at','label','bullets','sources','last_checked','markdown','llm']
 python -c "t=open('outputs/fee_explainer.md').read(); print('Last checked:' in t, t.count('http'))"
 # expect: True 2   (exactly 2 official links)
@@ -758,7 +758,7 @@ Write README.md for the submission with these sections:
 
 ### P12 — Source list
 ```
-Create docs/sources.md with 4-6 official, non-login URLs used for the fee explainer. Include for each: name, URL, what it supports, date checked. Cover AMFI (exit load), SEBI (investor education / TER & charges), Groww official pricing/charges page, and one exchange investor-education page. Mark "Last checked: <today>".
+Create docs/sources.md with 4-6 official, non-login URLs used for the fee explainer. Include for each: name, URL, what it supports, date checked. Cover AMFI (charges/TER), SEBI (investor education, incl. its exit-load page), Groww official pricing/charges page, and one exchange investor-education page. Verify every URL actually resolves (AMFI's legacy exit-load URL now 404s). Mark "Last checked: <today>".
 ```
 
 ### P13 — Demo script + video plan (<=3 min)

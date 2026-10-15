@@ -188,7 +188,7 @@ From the full 12-week export: `python -m src.run_all --weeks 12` → **43 review
 >    …
 > 6. There is no exit load after the holding period defined by the scheme.
 >
-> **Sources:** AMFI — Exit Load (Investor Corner) · SEBI — Investor Education
+> **Sources:** AMFI — Expense Ratio (Investor Corner) · SEBI Investor — Exit Load
 > **Last checked:** 2026-10-15
 
 **`outputs/email_draft.eml`** — subject
@@ -227,14 +227,17 @@ Live run of `streamlit run app.py` on the built-in sample (sidebar → **Run ana
 ## Source list (4–6 URLs)
 
 Public, no-login sources that ground the fee explainer; the **first two** are injected into it.
-Full table: `docs/sources.md`.
+Full table (with what each supports + date checked): `docs/sources.md`.
 
-1. **AMFI — Exit Load (Investor Corner)** — <https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html> *(used)*
-2. **SEBI — Investor Education** — <https://investor.sebi.gov.in/> *(used)*
-3. Groww — Exit Load explained — <https://groww.in/p/exit-load>
-4. Groww — Pricing & Charges — <https://groww.in/pricing>
-5. AMFI — Total Expense Ratio (TER) — <https://www.amfiindia.com/investor-corner/knowledge-center/total-expense-ratio.html>
-6. NSE — Investor Education — <https://www.nseindia.com/investor-relations/investor-education>
+1. **AMFI — Expense Ratio (Investor Corner)** — <https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio> *(used)*
+2. **SEBI Investor — Exit Load** — <https://investor.sebi.gov.in/exit_load.html> *(used)*
+3. SEBI — Investor Education — <https://investor.sebi.gov.in/>
+4. Groww — Exit Load in Mutual Funds — <https://groww.in/p/exit-load-in-mutual-funds>
+5. Groww — Pricing & Charges — <https://groww.in/pricing>
+6. NSE — Investor's Home (Investor Education) — <https://www.nseindia.com/static/invest/investors-home>
+
+> AMFI's legacy exit-load URL now returns 404, so AMFI is cited for charges/TER and the exit-load
+> definition is grounded in SEBI's exit-load page. Both injected links verified live on 2026-10-15.
 
 ## Compliance
 - Public review exports only — no scraping behind logins.

@@ -129,22 +129,32 @@ THEME_ACTIONS: dict[str, str] = {
 }
 
 # ---------------------------------------------------------------- sources
-# 4-6 official, non-login URLs. The fee explainer uses the first two.
+# 4-6 official, non-login URLs (all verified to resolve). The fee explainer
+# injects exactly two — see EXPLAINER_SOURCE_NAMES. Keep in sync with docs/sources.md.
+#
+# Note: AMFI's legacy exit-load page
+# (amfiindia.com/investor-corner/knowledge-center/exit-load.html) now 404s, so AMFI is
+# cited for fund charges/TER and the exit-load definition is grounded in SEBI's page.
 SOURCES: list[dict[str, str]] = [
     {
-        "name": "AMFI — Exit Load (Investor Corner)",
-        "url": "https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html",
-        "supports": "Definition of exit load, how it is applied on redemption",
+        "name": "AMFI — Expense Ratio (Investor Corner)",
+        "url": "https://www.amfiindia.com/investor/knowledge-center-info?zoneName=expenseRatio",
+        "supports": "What the Total Expense Ratio is, its components, and SEBI Regulation 52 limits",
+    },
+    {
+        "name": "SEBI Investor — Exit Load",
+        "url": "https://investor.sebi.gov.in/exit_load.html",
+        "supports": "Definition of exit load, how it reduces the redemption amount, worked example",
     },
     {
         "name": "SEBI — Investor Education",
         "url": "https://investor.sebi.gov.in/",
-        "supports": "Regulator's plain-language explainers on mutual fund charges",
+        "supports": "Regulator's plain-language investor-education portal (charges, TER, fees)",
     },
     {
-        "name": "Groww — Exit Load explained",
-        "url": "https://groww.in/p/exit-load",
-        "supports": "Product-level explanation of exit load on Groww",
+        "name": "Groww — Exit Load in Mutual Funds",
+        "url": "https://groww.in/p/exit-load-in-mutual-funds",
+        "supports": "Groww's product-level explainer: what exit load is and how it is calculated",
     },
     {
         "name": "Groww — Pricing & Charges",
@@ -152,19 +162,17 @@ SOURCES: list[dict[str, str]] = [
         "supports": "Groww's published brokerage / DP / AMC charges",
     },
     {
-        "name": "AMFI — Total Expense Ratio (TER)",
-        "url": "https://www.amfiindia.com/investor-corner/knowledge-center/total-expense-ratio.html",
-        "supports": "Recurring fund charges vs one-time charges like exit load",
-    },
-    {
-        "name": "NSE — Investor Education",
-        "url": "https://www.nseindia.com/investor-relations/investor-education",
-        "supports": "Exchange investor-education hub (DP / transaction charges)",
+        "name": "NSE — Investor's Home (Investor Education)",
+        "url": "https://www.nseindia.com/static/invest/investors-home",
+        "supports": "Exchange investor-education hub (investing safely, charges & taxes)",
     },
 ]
 
 # Sources injected into the generated explainer (must be exactly 2 per brief).
-EXPLAINER_SOURCE_NAMES = ["AMFI — Exit Load (Investor Corner)", "SEBI — Investor Education"]
+EXPLAINER_SOURCE_NAMES = [
+    "AMFI — Expense Ratio (Investor Corner)",
+    "SEBI Investor — Exit Load",
+]
 
 
 def explainer_sources() -> list[dict[str, str]]:
