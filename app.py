@@ -60,26 +60,33 @@ st.markdown(
       }
       [data-testid="stMetricValue"] {font-size: 1.45rem;}
 
-      /* Sidebar: title, section headers ("Reviews source", "LLM") and status text in orange. */
+      /* Sidebar: grey background; title + section headers ("Groww — M5", "Reviews source", "LLM") black. */
+      [data-testid="stSidebar"] { background-color: #E0E0E0; }
       [data-testid="stSidebar"] h1,
       [data-testid="stSidebar"] h2,
-      [data-testid="stSidebar"] h3 { color: #FF7A00; }
+      [data-testid="stSidebar"] h3 { color: #000000; }
       [data-testid="stSidebar"] [data-testid="stAlert"],
       [data-testid="stSidebar"] [data-testid="stAlert"] * { color: #FF7A00 !important; }
 
-      /* ...except the "Gemini key detected — live text." success message, which stays black. */
+      /* "Gemini key detected — live text." success message in green. */
       [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"],
-      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"] * { color: #000000 !important; }
+      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"] * { color: #0F9D58 !important; }
+
+      /* White background for the main content area / tab panels. */
+      [data-testid="stAppViewContainer"],
+      [data-testid="stMain"],
+      [data-baseweb="tab-panel"],
+      [role="tabpanel"] { background-color: #FFFFFF; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-def orange_heading(text: str) -> None:
-    """Section heading in the brand orange (Reviews Intelligence tab)."""
+def section_heading(text: str) -> None:
+    """Section heading (Reviews Intelligence tab)."""
     st.markdown(
-        f'<h3 style="color:#FF7A00; font-size:1.25rem; font-weight:600; '
+        f'<h3 style="color:#000000; font-size:1.25rem; font-weight:600; '
         f'margin:.5rem 0 .35rem 0;">{text}</h3>',
         unsafe_allow_html=True,
     )
@@ -295,7 +302,7 @@ with tabs[0]:
 
     left, right = st.columns([3, 2], gap="large")
     with left:
-        orange_heading("Themes (max 5)")
+        section_heading("Themes (max 5)")
         show = dist.assign(**{"top 3": dist["theme"].isin(ins["top_themes"]).map({True: "⭐", False: ""})})
         st.dataframe(
             show,
@@ -308,24 +315,24 @@ with tabs[0]:
             },
         )
     with right:
-        orange_heading("Reviews by rating")
+        section_heading("Reviews by rating")
         rc = df["rating"].value_counts().sort_index()
         rc.index = [f"{int(r)}★" for r in rc.index]
         st.bar_chart(rc, height=270)
 
-    orange_heading("Top 3 themes")
+    section_heading("Top 3 themes")
     for i, t in enumerate(ins["top_themes"], 1):
         row = next(d for d in ins["theme_distribution"] if d["theme"] == t)
         st.markdown(f"**{i}. {t}** — {row['count']} reviews ({row['share_pct']:.0f}%)  \n_{config.THEME_MEANINGS.get(t, '')}_")
 
-    orange_heading("Real user quotes (verbatim, redacted)")
+    section_heading("Real user quotes (verbatim, redacted)")
     for q in ins["top_quotes"]:
         with st.container(border=True):
             st.markdown(f"> {q['text']}")
             stars = "★" * int(q["rating"]) + "☆" * (5 - int(q["rating"]))
             st.caption(f"{stars} · {q['week']} · theme: {q['theme']}")
 
-    orange_heading("🎯 Recurring confusion / fee pain point")
+    section_heading("🎯 Recurring confusion / fee pain point")
     fee = ins["fee_issue"]
     st.error(
         f"**{fee['label']}** — detected in **{fee['evidence_count']}** reviews.\n\n"

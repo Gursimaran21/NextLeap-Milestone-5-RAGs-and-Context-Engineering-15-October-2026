@@ -643,9 +643,9 @@ Everything below is written inside the matching `with tabs[i]:` block.
 ```
 Inside tabs[0]:
 - Render the five section headings ("Themes (max 5)", "Reviews by rating", "Top 3 themes",
-  "Real user quotes (verbatim, redacted)", "🎯 Recurring confusion / fee pain point") in the brand
-  orange via a small `orange_heading(text)` helper (st.markdown with
-  `<h3 style="color:#FF7A00">`).
+  "Real user quotes (verbatim, redacted)", "🎯 Recurring confusion / fee pain point") in black
+  via a small `section_heading(text)` helper (st.markdown with
+  `<h3 style="color:#000000">`).
 - Theme scorecards: st.columns(3) of st.metric — one per ins["top_themes"], value =
   f"{count} reviews", delta = f"{share_pct:.0f}% of reviews" (delta_color "off").
 - Then st.columns([3, 2], gap="large"):
@@ -814,13 +814,13 @@ Yes — the local http://localhost:8501 URL can become a permanent Streamlit URL
 Code prep:
 - Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
   Gemini text works on Cloud; locally Gemini stays optional).
-- Add .streamlit/config.toml with a warm orange theme (primaryColor "#FF7A00",
-  backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#000000") and
+- Add .streamlit/config.toml (primaryColor "#FF7A00", backgroundColor "#FFFFFF" -> white tab
+  panels, secondaryBackgroundColor "#E0E0E0" -> grey sidebar, textColor "#000000") and
   [browser] gatherUsageStats = false. In app.py the main page heading is an orange <h1>
-  (#FF7A00); body/data text stays black for readability. The main page heading, the sidebar
-  title ("📈 Groww — M5"), the sidebar section headers ("1 · Reviews source", "2 · LLM") and the
-  sidebar LLM status text are orange (#FF7A00) — except the "Gemini key detected — live text."
-  success message, which is forced to black (#000000) via [data-testid="stAlertContentSuccess"].
+  (#FF7A00); body/data text stays black for readability. The sidebar background is grey and its
+  title ("📈 Groww — M5") and section headers ("1 · Reviews source", "2 · LLM") are black; the
+  sidebar LLM status "Gemini key detected — live text." is green (#0F9D58) via
+  [data-testid="stAlertContentSuccess"].
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
 - In app.py, right after load_dotenv(), bridge Streamlit secrets into the environment:
