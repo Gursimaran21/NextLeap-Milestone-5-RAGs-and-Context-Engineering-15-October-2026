@@ -75,12 +75,27 @@ gate: ApprovalGate = st.session_state.gate
 
 
 # --------------------------------------------------------------------------- pipeline
-def run_pipeline(df: pd.DataFrame, weeks: int) -> dict:
+def run_pipeline(df: pd.DataFrame, weeks: int, progress=None) -> dict:
+    """Run every stage in order. `progress(msg)` (optional) reports each step to the UI."""
+    def emit(msg: str) -> None:
+        if progress is not None:
+            progress(msg)
+
     df = cluster_mod.run(df)
+    progress and progress(f"✅ Themed into {df['theme'].nunique()} clusters")
+
     ins = insights_mod.run(df, weeks)
+    progress and progress(f"✅ Insights — top themes: {', '.join(ins['top_themes'])}")
+
     ctx = retrieval.run(df, ins["fee_issue"]["label"])
+    progress and progress(f"✅ Retrieved {len(ctx)} RAG context reviews for “{ins['fee_issue']['label']}”")
+
     p = pulse.run(ins, ctx)
+    progress(f"✅ Weekly pulse written ({p['word_count']}/{config.MAX_PULSE_WORDS} words)")
+
     fx = fee_explainer.run(ins, ctx)
+    progress(f"✅ Fee explainer written ({len(fx['bullets'])}/{config.MAX_EXPLAINER_BULLETS} bullets)")
+
     return {"df": df, "insights": ins, "context": ctx, "pulse": p, "explainer": fx}
 
 
@@ -142,8 +157,9 @@ with st.sidebar:
         st.success(f"Reset — removed {len(removed)} file(s). Run analysis again to rebuild.")
 
 if run_clicked:
-    with st.spinner("Running ingest → cluster → insights → retrieve → pulse → explainer…"):
+    with st.status("Running analysis…", expanded=True) as status:
         try:
+            src = "uploaded CSV" if uploaded is not None else config.SAMPLE_REVIEWS.name
             if uploaded is not None:
                 config.RAW_DIR.mkdir(parents=True, exist_ok=True)
                 up = config.RAW_DIR / "uploaded_reviews.csv"
@@ -151,9 +167,16 @@ if run_clicked:
                 df = ingest.load_reviews(up, weeks)
             else:
                 df = ingest.load_reviews(config.SAMPLE_REVIEWS, weeks)
-            st.session_state.results = run_pipeline(df, weeks)
+            st.write(
+                f"✅ Ingested `{src}` — {len(df)} reviews kept "
+                f"({df.attrs.get('redactions', 0)} PII redactions)"
+            )
+
+            st.session_state.results = run_pipeline(df, weeks, progress=st.write)
             st.session_state.action_results = None
+            status.update(label="Analysis complete ✅", state="complete", expanded=False)
         except Exception as exc:  # noqa: BLE001
+            status.update(label="Pipeline failed ❌", state="error", expanded=True)
             st.error(f"Pipeline failed: {exc}")
 
 if st.session_state.results is None:

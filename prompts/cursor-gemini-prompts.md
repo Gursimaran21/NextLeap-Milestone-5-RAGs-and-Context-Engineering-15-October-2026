@@ -552,6 +552,10 @@ Add run_pipeline(df, weeks) -> dict that calls, in order:
   -> pulse.run(ins, ctx) -> fee_explainer.run(ins, ctx)
 Return {"df":..., "insights":..., "context":..., "pulse":..., "explainer":...}.
 It must reuse the existing src functions only — no logic duplicated in the app.
+Add an optional `progress=None` callback; after each stage call `progress("<message>")`
+(guard for None) so the UI can stream step-by-step updates — e.g. themed cluster count,
+top themes, retrieved context count, pulse word count vs config.MAX_PULSE_WORDS, and
+bullet count vs config.MAX_EXPLAINER_BULLETS.
 ```
 
 ### S4 — Sidebar (source, window, run button, LLM status)
@@ -575,13 +579,16 @@ Add `with st.sidebar:`:
 
 ### S5 — Run handler
 ```
-Handle run_clicked:
+Handle run_clicked inside a live status panel (NOT a single st.spinner):
+`with st.status("Running analysis…", expanded=True) as status:` and a try/except:
 - If a file was uploaded, save its bytes to data/raw/uploaded_reviews.csv and call
   ingest.load_reviews(that_path, weeks); otherwise ingest.load_reviews(config.SAMPLE_REVIEWS, weeks).
-- Wrap everything in `with st.spinner("Running ingest → cluster → insights → retrieve → pulse → explainer…")`
-  and a try/except that calls st.error(f"Pipeline failed: {exc}").
-- On success store st.session_state.results = run_pipeline(df, weeks) and reset
-  st.session_state.action_results = None.
+  Then st.write a "✅ Ingested <src> — N reviews kept (M PII redactions)" line.
+- st.session_state.results = run_pipeline(df, weeks, progress=st.write) so each stage
+  streams a line into the panel; reset st.session_state.action_results = None.
+- On success: status.update(label="Analysis complete ✅", state="complete", expanded=False).
+- On failure: status.update(label="Pipeline failed", state="error", expanded=True) and
+  st.error(f"Pipeline failed: {exc}").
 ```
 
 ### S6 — Landing (empty) state

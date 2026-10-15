@@ -1,11 +1,10 @@
 # Exit Load on Mutual Fund Redemption — Explained
 
-1. An exit load is a fee charged by Asset Management Companies (AMCs) when you redeem (sell) mutual fund units before completing a specified minimum holding period.
-2. The portfolio value displayed in the app shows your gross investment value calculated using the latest Net Asset Value (NAV), which does not pre-deduct conditional exit loads.
-3. If you redeem units before the required holding period ends, the AMC deducts the applicable exit load percentage from the redemption proceeds before remitting the remaining net balance to your bank account.
-4. Redemptions follow a First-In, First-Out (FIFO) sequence, meaning your oldest units are redeemed first, and each purchase tranche or Systematic Investment Plan (SIP) installment is evaluated individually against its own holding period.
-5. If you redeem your units after the specified exit load period has passed, no exit load is charged and the full redemption value (subject to applicable taxes) is credited.
-6. The specific exit load percentage and applicable holding period for any fund are disclosed in the Scheme Information Document (SID), Key Information Memorandum (KIM), and on the fund details page within the app.
+1. **What an exit load is:** An exit load is a fee charged by an Asset Management Company (AMC) when you redeem (sell) mutual fund units before completing a specified holding period.
+2. **Why the credited amount is lower:** The portfolio value in the app shows the gross market value of your investment based on the current Net Asset Value (NAV). If you redeem before the required holding period ends, the fund house deducts the exit load percentage from the total value, resulting in a lower final amount credited to your bank account.
+3. **How the deduction is processed:** The exit load is automatically calculated and withheld by the mutual fund house at the time of processing your redemption request, before the payout is issued.
+4. **Different rules per scheme:** Exit load percentages and required holding durations vary by mutual fund scheme. For example, a scheme may charge a 1% exit load if redeemed within 365 days of purchase, but 0% after 365 days.
+5. **Checking charges before redeeming:** You can review the exact exit load rules, holding periods, and fee percentages for any fund on the fund details page in the app before submitting a redemption request.
 
 **Sources**
 - AMFI — Exit Load (Investor Corner): https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html
