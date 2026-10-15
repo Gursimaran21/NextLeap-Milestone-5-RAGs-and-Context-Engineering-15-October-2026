@@ -589,8 +589,10 @@ Handle run_clicked inside a live status panel (NOT a single st.spinner):
 - On success: status.update(label="Analysis complete ✅", state="complete", expanded=False).
 - On failure: status.update(label="Pipeline failed", state="error", expanded=True) and
   st.error(f"Pipeline failed: {exc}").
-Layout: render the page title ONCE (st.title("📈 Groww — Review Insights Analyser")) before
-this handler, then create two fixed-position slots in display order —
+Layout: render the page title ONCE as an orange heading — `st.markdown('<h1 style="color:#FF7A00;
+margin:0 0 .35rem 0; font-weight:800;">📈 Groww — Review Insights Analyser</h1>',
+unsafe_allow_html=True)` — before this handler, then create two fixed-position slots in
+display order —
 `header_slot = st.container()` then `status_slot = st.empty()`. Run the pipeline inside
 `with status_slot.container(), st.status(...) as status:`. Later render the caption + metric
 cards inside `with header_slot:`. Containers/slots render in creation order regardless of when

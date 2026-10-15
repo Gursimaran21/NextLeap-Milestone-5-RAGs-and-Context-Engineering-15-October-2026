@@ -156,7 +156,11 @@ with st.sidebar:
         st.session_state.action_results = None
         st.success(f"Reset — removed {len(removed)} file(s). Run analysis again to rebuild.")
 
-st.title("📈 Groww — Review Insights Analyser")
+st.markdown(
+    '<h1 style="color:#FF7A00; margin:0 0 .35rem 0; font-weight:800;">'
+    "📈 Groww — Review Insights Analyser</h1>",
+    unsafe_allow_html=True,
+)
 
 # Fixed-position containers: the run-progress panel lives BELOW the header/metric cards
 # (containers render in creation order regardless of when they get filled). status_slot is an
