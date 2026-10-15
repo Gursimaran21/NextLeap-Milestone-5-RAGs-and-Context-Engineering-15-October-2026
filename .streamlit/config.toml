@@ -2,7 +2,7 @@
 primaryColor = "#FF7A00"
 backgroundColor = "#FFF9F2"
 secondaryBackgroundColor = "#FFEDD8"
-textColor = "#FF7A00"
+textColor = "#000000"
 
 [browser]
 gatherUsageStats = false

@@ -58,17 +58,7 @@ st.markdown(
           border-radius: 12px;
           padding: .6rem .9rem;
       }
-      [data-testid="stMetricValue"] {font-size: 1.45rem; color: #FF7A00;}
-
-      /* Orange text everywhere (primary button labels keep a contrast-safe colour). */
-      [data-testid="stMarkdownContainer"] *,
-      [data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] *,
-      [data-testid="stMetricLabel"], [data-testid="stMetricValue"],
-      [data-testid="stWidgetLabel"], [data-testid="stWidgetLabel"] *,
-      [data-testid="stAlert"] *, [data-testid="stAlert"],
-      [data-testid="stJson"] *, [data-testid="stCode"] *, [data-testid="stCode"] code,
-      [data-testid="stFileUploaderDropzone"] *, [data-testid="stFileUploaderDropzone"] small,
-      .stTabs [data-baseweb="tab"], .stTabs [data-baseweb="tab"] * { color: #FF7A00 !important; }
+      [data-testid="stMetricValue"] {font-size: 1.45rem;}
     </style>
     """,
     unsafe_allow_html=True,

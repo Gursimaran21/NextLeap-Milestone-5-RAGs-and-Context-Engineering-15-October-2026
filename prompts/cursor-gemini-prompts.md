@@ -809,11 +809,10 @@ Yes — the local http://localhost:8501 URL can become a permanent Streamlit URL
 Code prep:
 - Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
   Gemini text works on Cloud; locally Gemini stays optional).
-- Add .streamlit/config.toml with a warm all-orange theme (primaryColor "#FF7A00",
-  backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#FF7A00") and
-  [browser] gatherUsageStats = false. In app.py, also inject a small CSS block that forces
-  #FF7A00 on markdown/caption/metric/tab/alert/code text (leave primary button labels alone so
-  they stay contrast-safe).
+- Add .streamlit/config.toml with a warm orange theme (primaryColor "#FF7A00",
+  backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#000000") and
+  [browser] gatherUsageStats = false. In app.py the main page heading is an orange <h1>
+  (#FF7A00); body/data text stays black for readability.
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
 - In app.py, right after load_dotenv(), bridge Streamlit secrets into the environment:
