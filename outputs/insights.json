@@ -1,36 +1,36 @@
 {
-  "generated_at": "2026-10-15T08:01:09.736973+00:00",
+  "generated_at": "2026-10-15T08:21:00.960429+00:00",
   "window_weeks": 12,
-  "window_start": "2026-07-16",
-  "window_end": "2026-10-08",
-  "total_reviews": 40,
-  "avg_rating": 2.42,
-  "source_file": "groww_reviews_sample.csv",
+  "window_start": "2026-07-19",
+  "window_end": "2026-10-11",
+  "total_reviews": 43,
+  "avg_rating": 2.35,
+  "source_file": "groww_reviews_raw.csv",
   "theme_distribution": [
     {
       "theme": "Charges & Fees",
-      "count": 17,
-      "share_pct": 42.5
+      "count": 20,
+      "share_pct": 46.5
     },
     {
       "theme": "Payments & SIP",
-      "count": 6,
-      "share_pct": 15.0
+      "count": 8,
+      "share_pct": 18.6
     },
     {
       "theme": "Onboarding & KYC",
-      "count": 6,
-      "share_pct": 15.0
-    },
-    {
-      "theme": "Statements & Reports",
-      "count": 6,
-      "share_pct": 15.0
+      "count": 7,
+      "share_pct": 16.3
     },
     {
       "theme": "Withdrawals & Redemption",
-      "count": 5,
-      "share_pct": 12.5
+      "count": 4,
+      "share_pct": 9.3
+    },
+    {
+      "theme": "Statements & Reports",
+      "count": 4,
+      "share_pct": 9.3
     }
   ],
   "top_themes": [
@@ -54,17 +54,17 @@
       "theme": "Payments & SIP"
     },
     {
-      "text": "Charged more than expected When I redeemed, the credited amount was less than shown. Please explain exit load clearly in the app.",
+      "text": "Exit load hidden in fine print Exit load is buried in the fine print. A first time investor will never notice it before redeeming.",
       "rating": 1,
-      "date": "2026-08-06",
-      "week": "Aug 06",
+      "date": "2026-08-22",
+      "week": "Aug 22",
       "theme": "Charges & Fees"
     }
   ],
   "fee_issue": {
     "label": "Exit Load on Mutual Fund Redemption",
     "term": "exit load",
-    "evidence_count": 14,
+    "evidence_count": 17,
     "matched_keywords": [
       "exit load",
       "amount credited less",

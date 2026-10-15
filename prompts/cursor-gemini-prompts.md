@@ -589,13 +589,19 @@ Handle run_clicked inside a live status panel (NOT a single st.spinner):
 - On success: status.update(label="Analysis complete ✅", state="complete", expanded=False).
 - On failure: status.update(label="Pipeline failed", state="error", expanded=True) and
   st.error(f"Pipeline failed: {exc}").
+Layout: render the page title ONCE (st.title("📈 Groww — Review Insights Analyser")) before
+this handler, then create two fixed-position containers in display order —
+`header_slot = st.container()` then `status_slot = st.container()`. Enter the status panel via
+`with status_slot, st.status(...) as status:`. Later render the caption + metric cards inside
+`with header_slot:`. Containers render in creation order regardless of when they are filled, so
+the progress panel sits BELOW the header/metric cards and ABOVE the tabs. Do not duplicate the
+title in the landing or results branch.
 ```
 
 ### S6 — Landing (empty) state
 ```
-If st.session_state.results is None, render a rich welcome and st.stop() so the rest of the
 app never runs before the pipeline has produced results:
-- Title "📈 Groww — Review Insights Analyser" + a one-line summary of the flow.
+- One-line summary of the flow (the page title is already rendered once, above this branch).
 - st.columns(4) with "#### 1..4" cards: Review intelligence / Weekly pulse / Fee explainer /
   MCP gate.
 - st.divider(), then st.columns([3, 2], gap="large"):

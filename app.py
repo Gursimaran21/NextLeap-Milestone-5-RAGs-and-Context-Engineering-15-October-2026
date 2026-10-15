@@ -82,19 +82,19 @@ def run_pipeline(df: pd.DataFrame, weeks: int, progress=None) -> dict:
             progress(msg)
 
     df = cluster_mod.run(df)
-    progress and progress(f"✅ Themed into {df['theme'].nunique()} clusters")
+    emit(f"✅ Themed into {df['theme'].nunique()} clusters")
 
     ins = insights_mod.run(df, weeks)
-    progress and progress(f"✅ Insights — top themes: {', '.join(ins['top_themes'])}")
+    emit(f"✅ Insights — top themes: {', '.join(ins['top_themes'])}")
 
     ctx = retrieval.run(df, ins["fee_issue"]["label"])
-    progress and progress(f"✅ Retrieved {len(ctx)} RAG context reviews for “{ins['fee_issue']['label']}”")
+    emit(f"✅ Retrieved {len(ctx)} RAG context reviews for “{ins['fee_issue']['label']}”")
 
     p = pulse.run(ins, ctx)
-    progress(f"✅ Weekly pulse written ({p['word_count']}/{config.MAX_PULSE_WORDS} words)")
+    emit(f"✅ Weekly pulse written ({p['word_count']}/{config.MAX_PULSE_WORDS} words)")
 
     fx = fee_explainer.run(ins, ctx)
-    progress(f"✅ Fee explainer written ({len(fx['bullets'])}/{config.MAX_EXPLAINER_BULLETS} bullets)")
+    emit(f"✅ Fee explainer written ({len(fx['bullets'])}/{config.MAX_EXPLAINER_BULLETS} bullets)")
 
     return {"df": df, "insights": ins, "context": ctx, "pulse": p, "explainer": fx}
 
@@ -156,8 +156,15 @@ with st.sidebar:
         st.session_state.action_results = None
         st.success(f"Reset — removed {len(removed)} file(s). Run analysis again to rebuild.")
 
+st.title("📈 Groww — Review Insights Analyser")
+
+# Fixed-position containers: the run-progress panel lives BELOW the header/metric cards
+# (containers render in creation order regardless of when they get filled).
+header_slot = st.container()
+status_slot = st.container()
+
 if run_clicked:
-    with st.status("Running analysis…", expanded=True) as status:
+    with status_slot, st.status("Running analysis…", expanded=True) as status:
         try:
             src = "uploaded CSV" if uploaded is not None else config.SAMPLE_REVIEWS.name
             if uploaded is not None:
@@ -180,7 +187,6 @@ if run_clicked:
             st.error(f"Pipeline failed: {exc}")
 
 if st.session_state.results is None:
-    st.title("📈 Groww — Review Insights Analyser")
     st.markdown(
         "Turn the last **8–12 weeks** of App Store + Play Store reviews into a **weekly product "
         "pulse** and a **customer-facing fee explainer** — then log them through an **MCP approval gate**."
@@ -231,16 +237,16 @@ R = st.session_state.results
 ins, ctx, p, fx, df = R["insights"], R["context"], R["pulse"], R["explainer"], R["df"]
 
 # --------------------------------------------------------------------------- header
-st.title("Groww — Review Insights Analyser")
-st.caption(
-    f"Window **{ins['window_start']} → {ins['window_end']}** · source `{ins.get('source_file', 'n/a')}` · "
-    f"writer: **{'Gemini' if p['llm'] else 'offline'}**"
-)
-k1, k2, k3, k4 = st.columns(4)
-k1.metric("Reviews analysed", ins["total_reviews"])
-k2.metric("Window", f"{ins['window_weeks']} wks")
-k3.metric("Avg rating", ins["avg_rating"], "out of 5", delta_color="off")
-k4.metric("Fee issue evidence", ins["fee_issue"]["evidence_count"])
+with header_slot:
+    st.caption(
+        f"Window **{ins['window_start']} → {ins['window_end']}** · source `{ins.get('source_file', 'n/a')}` · "
+        f"writer: **{'Gemini' if p['llm'] else 'offline'}**"
+    )
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("Reviews analysed", ins["total_reviews"])
+    k2.metric("Window", f"{ins['window_weeks']} wks")
+    k3.metric("Avg rating", ins["avg_rating"], "out of 5", delta_color="off")
+    k4.metric("Fee issue evidence", ins["fee_issue"]["evidence_count"])
 
 tabs = st.tabs(
     ["🧭 Review Intelligence", "🗞️ Weekly Pulse", "💸 Fee Explainer", "🔐 MCP Approval", "📦 Deliverables"]

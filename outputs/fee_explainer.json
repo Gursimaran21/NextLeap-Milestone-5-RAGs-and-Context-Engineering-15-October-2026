@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-10-15T08:00:57.630235+00:00",
+  "generated_at": "2026-10-15T08:21:00.960429+00:00",
   "label": "Exit Load on Mutual Fund Redemption",
   "bullets": [
-    "**What an exit load is:** An exit load is a fee charged by an Asset Management Company (AMC) when you redeem (sell) mutual fund units before completing a specified holding period.",
-    "**Why the credited amount is lower:** The portfolio value in the app shows the gross market value of your investment based on the current Net Asset Value (NAV). If you redeem before the required holding period ends, the fund house deducts the exit load percentage from the total value, resulting in a lower final amount credited to your bank account.",
-    "**How the deduction is processed:** The exit load is automatically calculated and withheld by the mutual fund house at the time of processing your redemption request, before the payout is issued.",
-    "**Different rules per scheme:** Exit load percentages and required holding durations vary by mutual fund scheme. For example, a scheme may charge a 1% exit load if redeemed within 365 days of purchase, but 0% after 365 days.",
-    "**Checking charges before redeeming:** You can review the exact exit load rules, holding periods, and fee percentages for any fund on the fund details page in the app before submitting a redemption request."
+    "Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.",
+    "It is charged by the fund scheme, not by Groww, and is deducted from your redemption proceeds.",
+    "It is calculated as a percentage of the redeemed value, so the credited amount can be lower than the value shown.",
+    "Each scheme sets its own exit load and holding period; check the scheme's Scheme Information Document.",
+    "For most equity schemes the holding period is 1 year, but this varies by scheme.",
+    "There is no exit load after the holding period defined by the scheme."
   ],
   "sources": [
     {
@@ -21,6 +22,6 @@
     }
   ],
   "last_checked": "2026-10-15",
-  "markdown": "# Exit Load on Mutual Fund Redemption \u2014 Explained\n\n1. **What an exit load is:** An exit load is a fee charged by an Asset Management Company (AMC) when you redeem (sell) mutual fund units before completing a specified holding period.\n2. **Why the credited amount is lower:** The portfolio value in the app shows the gross market value of your investment based on the current Net Asset Value (NAV). If you redeem before the required holding period ends, the fund house deducts the exit load percentage from the total value, resulting in a lower final amount credited to your bank account.\n3. **How the deduction is processed:** The exit load is automatically calculated and withheld by the mutual fund house at the time of processing your redemption request, before the payout is issued.\n4. **Different rules per scheme:** Exit load percentages and required holding durations vary by mutual fund scheme. For example, a scheme may charge a 1% exit load if redeemed within 365 days of purchase, but 0% after 365 days.\n5. **Checking charges before redeeming:** You can review the exact exit load rules, holding periods, and fee percentages for any fund on the fund details page in the app before submitting a redemption request.\n\n**Sources**\n- AMFI \u2014 Exit Load (Investor Corner): https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html\n- SEBI \u2014 Investor Education: https://investor.sebi.gov.in/\n\nLast checked: 2026-10-15",
-  "llm": true
+  "markdown": "# Exit Load on Mutual Fund Redemption \u2014 Explained\n\n1. Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.\n2. It is charged by the fund scheme, not by Groww, and is deducted from your redemption proceeds.\n3. It is calculated as a percentage of the redeemed value, so the credited amount can be lower than the value shown.\n4. Each scheme sets its own exit load and holding period; check the scheme's Scheme Information Document.\n5. For most equity schemes the holding period is 1 year, but this varies by scheme.\n6. There is no exit load after the holding period defined by the scheme.\n\n**Sources**\n- [AMFI \u2014 Exit Load (Investor Corner)](https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html)\n- [SEBI \u2014 Investor Education](https://investor.sebi.gov.in/)\n\nLast checked: 2026-10-15",
+  "llm": false
 }
