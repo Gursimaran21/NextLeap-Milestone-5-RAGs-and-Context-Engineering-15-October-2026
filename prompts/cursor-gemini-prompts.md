@@ -807,7 +807,8 @@ Yes — the local http://localhost:8501 URL can become a permanent Streamlit URL
 Code prep:
 - Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
   Gemini text works on Cloud; locally Gemini stays optional).
-- Add .streamlit/config.toml with a brand theme (primaryColor "#00b386") and
+- Add .streamlit/config.toml with a warm orange theme (primaryColor "#FF7A00",
+  backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#262730") and
   [browser] gatherUsageStats = false.
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).

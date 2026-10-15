@@ -54,11 +54,11 @@ st.markdown(
     <style>
       .block-container {padding-top: 2.2rem;}
       [data-testid="stMetric"] {
-          border: 1px solid rgba(128,128,128,.25);
+          border: 1px solid rgba(255,122,0,.35);
           border-radius: 12px;
           padding: .6rem .9rem;
       }
-      [data-testid="stMetricValue"] {font-size: 1.45rem;}
+      [data-testid="stMetricValue"] {font-size: 1.45rem; color: #FF7A00;}
     </style>
     """,
     unsafe_allow_html=True,
