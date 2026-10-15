@@ -69,7 +69,7 @@ data/
   raw/groww_reviews_raw.csv sample + synthetic PII rows (redaction demo)
   processed/                cleaned + themed reviews
 outputs/                    weekly_pulse.md · fee_explainer.md · notes_doc.md · email_draft.eml
-docs/                       sources.md · demo_script.md
+docs/                       sources.md · demo_script.md · deploy_streamlit_cloud.md · img/ (screenshots)
 scripts/make_raw_with_pii.py  regenerates the raw demo export
 prompts/cursor-gemini-prompts.md  the Cursor (Gemini) prompt pack used to build this
 ```
@@ -158,6 +158,75 @@ and each review keeps the label its text actually matches (95% agreement with th
 2. `python -m src.run_all --weeks 12 --input data/your_new_export.csv`
 3. `streamlit run app.py` → **Run analysis** → **Approve & Execute**.
 4. New doc entry, new email draft, new approval-log lines are appended (old ones are preserved).
+
+---
+
+## Sample outputs
+
+From the committed sample: `python -m src.run_all --weeks 12` → **43 reviews**, 12-week window
+(2026-07-19 → 2026-10-11), average **2.35★**.
+
+**`outputs/weekly_pulse.md`** — 238 words (cap 250):
+
+> **1. Top Themes**
+> - **Charges & Fees (20 reviews, 46%)** — brokerage, exit load, DP charges, AMC, deductions.
+> - **Payments & SIP (8 reviews, 19%)** — SIP execution, mandates, failed/refunded payments.
+> - **Onboarding & KYC (7 reviews, 16%)** — signup, KYC verification, PAN/nominee friction.
+>
+> **3. Key Observation** — Charges & Fees is the dominant and rising signal, not a one-off: the
+> redeem/sell screen shows a gross value, the credited value is lower, and the reason is not
+> surfaced in the flow.
+>
+> **5. Fee Signal** — Detected fee issue: **Exit Load on Mutual Fund Redemption** — 17 matching reviews.
+
+**`outputs/fee_explainer.md`** — 6 bullets, exactly 2 official links, `Last checked`:
+
+> 1. Exit load is a fee some mutual fund schemes charge when you redeem units before a defined holding period.
+> 2. It is charged by the fund scheme, not by Groww, and is deducted from your redemption proceeds.
+>    …
+> 6. There is no exit load after the holding period defined by the scheme.
+>
+> **Sources:** AMFI — Exit Load (Investor Corner) · SEBI — Investor Education
+> **Last checked:** 2026-10-15
+
+**`outputs/email_draft.eml`** — subject
+`Weekly Product Pulse + Customer Clarification — Groww (Week of 2026-10-15)`;
+body = the pulse + the reusable support snippet. **Draft only.**
+
+**`mcp/approval_log.jsonl`** — one JSON line per decision (timestamp, decision, action, token, approver):
+
+```json
+{"ts":"2026-10-15T09:05:12+00:00","decision":"APPROVED","action":"append_to_notes","token":"a1b2c3d4e5f60718","approver":"streamlit_user"}
+```
+
+Frozen copies of the generated artifacts are committed as `outputs/*_sample.md`.
+
+### Screenshots (add before submitting)
+
+Capture these from `streamlit run app.py` and drop the files in `docs/img/`:
+
+| # | Screen | Suggested file |
+|---|---|---|
+| 1 | Landing + sidebar (light-grey, "Gemini key detected") | `docs/img/01-landing.png` |
+| 2 | **Review Intelligence** — themes, 3 quotes, red fee box | `docs/img/02-review-intelligence.png` |
+| 3 | **Weekly Pulse** tab | `docs/img/03-weekly-pulse.png` |
+| 4 | **Fee Explainer** tab | `docs/img/04-fee-explainer.png` |
+| 5 | **MCP Approval** — payload *before* approving | `docs/img/05-approval-payload.png` |
+| 6 | Result cards + approval log after **Approve & Execute** | `docs/img/06-after-approval.png` |
+
+---
+
+## Source list (4–6 URLs)
+
+Public, no-login sources that ground the fee explainer; the **first two** are injected into it.
+Full table: `docs/sources.md`.
+
+1. **AMFI — Exit Load (Investor Corner)** — <https://www.amfiindia.com/investor-corner/knowledge-center/exit-load.html> *(used)*
+2. **SEBI — Investor Education** — <https://investor.sebi.gov.in/> *(used)*
+3. Groww — Exit Load explained — <https://groww.in/p/exit-load>
+4. Groww — Pricing & Charges — <https://groww.in/pricing>
+5. AMFI — Total Expense Ratio (TER) — <https://www.amfiindia.com/investor-corner/knowledge-center/total-expense-ratio.html>
+6. NSE — Investor Education — <https://www.nseindia.com/investor-relations/investor-education>
 
 ## Compliance
 - Public review exports only — no scraping behind logins.
