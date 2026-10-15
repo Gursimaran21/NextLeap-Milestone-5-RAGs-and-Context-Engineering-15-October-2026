@@ -4,6 +4,7 @@ A spoken walkthrough of the Streamlit prototype. Total run time ≈ **2:45**.
 
 **Pre-flight (before you hit record)**
 - Terminal A (repo root): `streamlit run app.py` → browser opens on `http://localhost:8501`.
+  *(Or demo the hosted build: <https://groww-review-insights.streamlit.app/> — click **Wake up** first if it's asleep.)*
 - Terminal B (repo root), for the 2:30 re-run beat.
 - Sidebar shows **Gemini key detected — live text.** if a key is set, otherwise the deterministic
   offline-writer note — both are valid; the constraints are met either way.

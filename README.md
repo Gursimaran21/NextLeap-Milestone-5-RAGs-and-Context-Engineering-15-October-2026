@@ -1,6 +1,10 @@
 # Groww — Milestone 5: Review Insights Analyser
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+[![Live demo](https://img.shields.io/badge/Live%20demo-Streamlit-FF4B4B.svg)](https://groww-review-insights.streamlit.app/)
+
+**🔗 Live demo:** <https://groww-review-insights.streamlit.app/> — hosted on Streamlit Community Cloud.
+If it shows *"Zzzz"*, the free instance has slept; click **Wake up** and it boots in ~30 s.
 
 **Product:** Groww · **One-liner:** turn 8–12 weeks of public App Store + Play Store reviews
 into (a) a weekly internal product pulse, (b) a customer-facing fee explainer, then push both
@@ -79,6 +83,9 @@ prompts/cursor-gemini-prompts.md  the Cursor (Gemini) prompt pack used to build 
 ---
 
 ## How to run
+
+> **Prefer the hosted version?** Open <https://groww-review-insights.streamlit.app/> — no install.
+> (First visit may need a **Wake up** click if the free instance slept.)
 
 ```bash
 pip install -r requirements.txt          # streamlit, pandas, scikit-learn, python-dotenv

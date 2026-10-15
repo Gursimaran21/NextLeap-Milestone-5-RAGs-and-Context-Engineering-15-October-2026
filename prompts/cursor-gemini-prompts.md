@@ -843,3 +843,4 @@ Caveat to state in docs: the Cloud container has NO persistent disk, so outputs/
 mcp/approval_log.jsonl reset on reboot/sleep, and all visitors share one instance — fine
 for a demo, not for production.
 ```
+> **Status:** deployed at <https://groww-review-insights.streamlit.app/> (2026-10-15).

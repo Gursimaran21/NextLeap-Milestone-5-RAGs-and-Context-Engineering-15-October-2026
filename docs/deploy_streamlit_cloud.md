@@ -4,6 +4,10 @@ Get a permanent public URL like **`https://<your-app-name>.streamlit.app`** (no 
 `localhost`). You need a **GitHub** account and a **Streamlit** account
 (sign in at <https://share.streamlit.io> with GitHub — free).
 
+> **✅ Deployed:** <https://groww-review-insights.streamlit.app/>
+> If it shows *"Zzzz"*, the free instance has slept — click **Wake up** and it boots in ~30 s.
+> The steps below are the exact ones used; keep them for re-deploys.
+
 ---
 
 ## 1 · Push this project to GitHub
