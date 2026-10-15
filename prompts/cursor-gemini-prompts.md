@@ -780,3 +780,39 @@ Return a table: Requirement | Status | Evidence | Fix (if any). Fix any failures
 | PII | none in any artifact (redacted before processing) |
 | re-run | new CSV + one command (`python -m src.run_all`) |
 | theme legend | 5 themes, defined in README |
+
+---
+
+## Phase 6 — Host on Streamlit Community Cloud (optional)
+
+### P15 — Publish a public URL
+```
+Yes — the local http://localhost:8501 URL can become a permanent Streamlit URL. Do:
+
+Code prep:
+- Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
+  Gemini text works on Cloud; locally Gemini stays optional).
+- Add .streamlit/config.toml with a brand theme (primaryColor "#00b386") and
+  [browser] gatherUsageStats = false.
+- Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
+  (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
+- In app.py, right after load_dotenv(), bridge Streamlit secrets into the environment:
+  for each of GEMINI_API_KEY / GEMINI_MODEL, if not already in os.environ and present in
+  st.secrets, copy it into os.environ (wrap in try/except). This lets src.llm, which reads
+  os.environ, work on Cloud where secrets arrive via st.secrets.
+- Write docs/deploy_streamlit_cloud.md with the exact steps below.
+
+Deploy (the owner does these — they need their own accounts):
+1. Push the repo to GitHub: git init; git add .; git commit -m "..."; create an EMPTY repo;
+   git remote add origin https://github.com/<user>/groww-milestone5.git; git push -u origin main.
+2. On share.streamlit.io -> Create app -> "Deploy a public app from GitHub" -> pick the
+   repo + branch main, Main file path = app.py.
+- Advanced settings: Python 3.11; Requirements file = requirements-cloud.txt; Secrets:
+  GEMINI_API_KEY = "...". (No key? the app still runs with the offline writer.)
+- Deploy -> you get https://<name>.streamlit.app. Reboot the app after changing
+  requirements/secrets.
+
+Caveat to state in docs: the Cloud container has NO persistent disk, so outputs/ and
+mcp/approval_log.jsonl reset on reboot/sleep, and all visitors share one instance — fine
+for a demo, not for production.
+```
