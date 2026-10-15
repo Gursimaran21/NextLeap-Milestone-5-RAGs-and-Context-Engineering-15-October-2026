@@ -66,6 +66,10 @@ st.markdown(
       [data-testid="stSidebar"] h3 { color: #FF7A00; }
       [data-testid="stSidebar"] [data-testid="stAlert"],
       [data-testid="stSidebar"] [data-testid="stAlert"] * { color: #FF7A00 !important; }
+
+      /* ...except the "Gemini key detected — live text." success message, which stays black. */
+      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"],
+      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"] * { color: #000000 !important; }
     </style>
     """,
     unsafe_allow_html=True,
