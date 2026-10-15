@@ -61,7 +61,7 @@ st.markdown(
       [data-testid="stMetricValue"] {font-size: 1.45rem;}
 
       /* Sidebar: grey background; title + section headers ("Groww — M5", "Reviews source", "LLM") black. */
-      [data-testid="stSidebar"] { background-color: #E0E0E0; }
+      [data-testid="stSidebar"] { background-color: #F0F0F0; }
       [data-testid="stSidebar"] h1,
       [data-testid="stSidebar"] h2,
       [data-testid="stSidebar"] h3 { color: #000000; }
@@ -185,7 +185,7 @@ with st.sidebar:
         st.success(f"Reset — removed {len(removed)} file(s). Run analysis again to rebuild.")
 
 st.markdown(
-    '<h1 style="color:#FF7A00; margin:0 0 .35rem 0; font-weight:800;">'
+    '<h1 style="color:#000000; margin:0 0 .35rem 0; font-weight:800;">'
     "📈 Groww — Review Insights Analyser</h1>",
     unsafe_allow_html=True,
 )

@@ -589,7 +589,7 @@ Handle run_clicked inside a live status panel (NOT a single st.spinner):
 - On success: status.update(label="Analysis complete ✅", state="complete", expanded=False).
 - On failure: status.update(label="Pipeline failed", state="error", expanded=True) and
   st.error(f"Pipeline failed: {exc}").
-Layout: render the page title ONCE as an orange heading — `st.markdown('<h1 style="color:#FF7A00;
+Layout: render the page title ONCE as a black heading — `st.markdown('<h1 style="color:#000000;
 margin:0 0 .35rem 0; font-weight:800;">📈 Groww — Review Insights Analyser</h1>',
 unsafe_allow_html=True)` — before this handler, then create two fixed-position slots in
 display order —
@@ -815,11 +815,11 @@ Code prep:
 - Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
   Gemini text works on Cloud; locally Gemini stays optional).
 - Add .streamlit/config.toml (primaryColor "#FF7A00", backgroundColor "#FFFFFF" -> white tab
-  panels, secondaryBackgroundColor "#E0E0E0" -> grey sidebar, textColor "#000000") and
-  [browser] gatherUsageStats = false. In app.py the main page heading is an orange <h1>
-  (#FF7A00); body/data text stays black for readability. The sidebar background is grey and its
-  title ("📈 Groww — M5") and section headers ("1 · Reviews source", "2 · LLM") are black; the
-  sidebar LLM status "Gemini key detected — live text." is green (#0F9D58) via
+  panels, secondaryBackgroundColor "#F0F0F0" -> light-grey sidebar, textColor "#000000") and
+  [browser] gatherUsageStats = false. In app.py the main page heading and body/data text stay
+  black for readability. The sidebar background is light grey and its title ("📈 Groww — M5") and
+  section headers ("1 · Reviews source", "2 · LLM") are black; the sidebar LLM status
+  "Gemini key detected — live text." is green (#0F9D58) via
   [data-testid="stAlertContentSuccess"].
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
