@@ -812,7 +812,9 @@ Code prep:
 - Add .streamlit/config.toml with a warm orange theme (primaryColor "#FF7A00",
   backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#000000") and
   [browser] gatherUsageStats = false. In app.py the main page heading is an orange <h1>
-  (#FF7A00); body/data text stays black for readability.
+  (#FF7A00); body/data text stays black for readability. The main page heading, the sidebar
+  title ("📈 Groww — M5"), the sidebar section headers ("1 · Reviews source", "2 · LLM") and the
+  sidebar LLM status text are all orange (#FF7A00).
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
 - In app.py, right after load_dotenv(), bridge Streamlit secrets into the environment:

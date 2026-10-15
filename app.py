@@ -59,6 +59,13 @@ st.markdown(
           padding: .6rem .9rem;
       }
       [data-testid="stMetricValue"] {font-size: 1.45rem;}
+
+      /* Sidebar: title, section headers ("Reviews source", "LLM") and status text in orange. */
+      [data-testid="stSidebar"] h1,
+      [data-testid="stSidebar"] h2,
+      [data-testid="stSidebar"] h3 { color: #FF7A00; }
+      [data-testid="stSidebar"] [data-testid="stAlert"],
+      [data-testid="stSidebar"] [data-testid="stAlert"] * { color: #FF7A00 !important; }
     </style>
     """,
     unsafe_allow_html=True,
