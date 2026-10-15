@@ -15,8 +15,8 @@ git init
 git add .
 git commit -m "Groww Milestone 5 — Streamlit prototype"
 git branch -M main
-# create an EMPTY repo on github.com named e.g. groww-milestone5, then:
-git remote add origin https://github.com/<your-username>/groww-milestone5.git
+# create an EMPTY repo on github.com (any name, e.g. <your-repo>), then:
+git remote add origin https://github.com/<your-username>/<your-repo>.git
 git push -u origin main
 ```
 
@@ -26,13 +26,13 @@ git push -u origin main
 ## 2 · Create the app
 
 1. Go to <https://share.streamlit.io> → **Create app** → **Deploy a public app from GitHub**.
-2. Repository: `<your-username>/groww-milestone5`, Branch: `main`, **Main file path: `app.py`**.
+2. Repository: `<your-username>/<your-repo>`, Branch: `main`, **Main file path: `app.py`**.
 3. Open **Advanced settings**:
    - **Python version:** 3.11 (or 3.12).
    - **Requirements file:** `requirements-cloud.txt` (this installs `google-genai` so live text works).
    - **Secrets:** paste the TOML below.
 4. Click **Deploy**. First build takes 2–4 minutes; you'll get a URL like
-   `https://groww-milestone5.streamlit.app`.
+   `https://<your-app-name>.streamlit.app`.
 
 ### Secrets (Advanced settings → Secrets)
 

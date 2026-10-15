@@ -831,7 +831,7 @@ Code prep:
 
 Deploy (the owner does these — they need their own accounts):
 1. Push the repo to GitHub: git init; git add .; git commit -m "..."; create an EMPTY repo;
-   git remote add origin https://github.com/<user>/groww-milestone5.git; git push -u origin main.
+   git remote add origin https://github.com/<user>/<repo>.git; git push -u origin main.
 2. On share.streamlit.io -> Create app -> "Deploy a public app from GitHub" -> pick the
    repo + branch main, Main file path = app.py.
 - Advanced settings: Python 3.11; Requirements file = requirements-cloud.txt; Secrets:
