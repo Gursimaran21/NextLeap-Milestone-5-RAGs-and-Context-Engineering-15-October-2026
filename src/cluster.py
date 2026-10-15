@@ -106,7 +106,9 @@ def cluster(df: pd.DataFrame, k: int = config.MAX_THEMES) -> pd.DataFrame:
 def run(df: pd.DataFrame) -> pd.DataFrame:
     config.ensure_dirs()
     out_df = cluster(df)
-    out_df.to_csv(config.REVIEWS_THEMED, index=False)
+    # Committed artifact — drop the raw (un-redacted) text columns to guarantee no PII.
+    safe = out_df.drop(columns=[c for c in ("title", "review_text") if c in out_df.columns])
+    safe.to_csv(config.REVIEWS_THEMED, index=False)
 
     dist = out_df["theme"].value_counts()
     total = len(out_df)

@@ -82,7 +82,10 @@ def run(path: str | Path | None = None, weeks: int = config.WEEKS) -> pd.DataFra
     config.ensure_dirs()
     df = load_reviews(path, weeks)
     out = config.PROCESSED_DIR / "reviews_clean.csv"
-    df.to_csv(out, index=False)
+    # Persist ONLY the PII-redacted text. The raw `title`/`review_text` columns may
+    # still contain PII and this CSV is committed — never write them to disk.
+    safe = df.drop(columns=[c for c in ("title", "review_text") if c in df.columns])
+    safe.to_csv(out, index=False)
     print(
         f"[ingest] {df.attrs['source_file']}: loaded {df.attrs['rows_loaded']} rows -> "
         f"{len(df)} kept | window {df.attrs['window_start']} .. {df.attrs['anchor']} | "

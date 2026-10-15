@@ -71,7 +71,7 @@ data/
   raw/groww_reviews_raw.csv sample + synthetic PII rows (redaction demo)
   processed/                cleaned + themed reviews
 outputs/                    weekly_pulse.md · fee_explainer.md · notes_doc.md · email_draft.eml
-docs/                       sources.md · demo_script.md · deploy_streamlit_cloud.md · img/ (screenshots)
+docs/                       sources.md · demo_script.md · qa_report.md · deploy_streamlit_cloud.md · img/ (screenshots)
 scripts/make_raw_with_pii.py  regenerates the raw demo export
 prompts/cursor-gemini-prompts.md  the Cursor (Gemini) prompt pack used to build this
 ```
@@ -168,7 +168,7 @@ and each review keeps the label its text actually matches (95% agreement with th
 From the full 12-week export: `python -m src.run_all --weeks 12` → **43 reviews**, 12-week window
 (2026-07-19 → 2026-10-11), average **2.35★**.
 
-**`outputs/weekly_pulse.md`** — 238 words (cap 250):
+**`outputs/weekly_pulse.md`** — 223 words (cap 250):
 
 > **1. Top Themes**
 > - **Charges & Fees (20 reviews, 46%)** — brokerage, exit load, DP charges, AMC, deductions.
@@ -201,7 +201,8 @@ body = the pulse + the reusable support snippet. **Draft only.**
 {"ts":"2026-10-15T09:05:12+00:00","decision":"APPROVED","action":"append_to_notes","token":"a1b2c3d4e5f60718","approver":"streamlit_user"}
 ```
 
-Frozen copies of the generated artifacts are committed as `outputs/*_sample.md`.
+Frozen copies of the generated pulse and explainer are committed as `outputs/*_sample.md`; the live
+artifacts are committed alongside them (`notes_doc.md`, `notes_log.json`, `email_draft.eml/.md`).
 
 ### Screenshots
 
@@ -239,8 +240,21 @@ Full table (with what each supports + date checked): `docs/sources.md`.
 > AMFI's legacy exit-load URL now returns 404, so AMFI is cited for charges/TER and the exit-load
 > definition is grounded in SEBI's exit-load page. Both injected links verified live on 2026-10-15.
 
+## Final QA
+
+One command re-runs the strict checklist over the generated artifacts **and** exercises the MCP
+approval gate live:
+
+```bash
+python -m scripts.qa_check        # 13/13 checks passed → exit code 0
+```
+
+It verifies pulse ≤ 250 words, exactly 3 themes / 3 quotes / 3 actions, ≤ 6 explainer bullets,
+2 official source links, `Last checked:`, facts-only tone, **no PII in any artifact**, and that
+MCP writes are blocked until approved (then logged). Full table + the two issues it caught and
+fixed: [`docs/qa_report.md`](docs/qa_report.md).
+
 ## Compliance
-- Public review exports only — no scraping behind logins.
 - All reviews are PII-redacted *before* any processing (`src/pii.py`); a final assert fails the run if any PII survives.
 - No usernames, emails, or IDs in any artifact.
 - The email is a **draft**, never sent.
