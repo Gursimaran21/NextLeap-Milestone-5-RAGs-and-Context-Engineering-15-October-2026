@@ -159,12 +159,14 @@ with st.sidebar:
 st.title("📈 Groww — Review Insights Analyser")
 
 # Fixed-position containers: the run-progress panel lives BELOW the header/metric cards
-# (containers render in creation order regardless of when they get filled).
+# (containers render in creation order regardless of when they get filled). status_slot is an
+# st.empty() placeholder so the progress panel can be cleared once the run finishes.
 header_slot = st.container()
-status_slot = st.container()
+status_slot = st.empty()
 
 if run_clicked:
-    with status_slot, st.status("Running analysis…", expanded=True) as status:
+    completed = False
+    with status_slot.container(), st.status("Running analysis…", expanded=True) as status:
         try:
             src = "uploaded CSV" if uploaded is not None else config.SAMPLE_REVIEWS.name
             if uploaded is not None:
@@ -182,9 +184,12 @@ if run_clicked:
             st.session_state.results = run_pipeline(df, weeks, progress=st.write)
             st.session_state.action_results = None
             status.update(label="Analysis complete ✅", state="complete", expanded=False)
+            completed = True
         except Exception as exc:  # noqa: BLE001
             status.update(label="Pipeline failed ❌", state="error", expanded=True)
             st.error(f"Pipeline failed: {exc}")
+    if completed:
+        status_slot.empty()  # panel served its purpose — vanish so results take the stage
 
 if st.session_state.results is None:
     st.markdown(
