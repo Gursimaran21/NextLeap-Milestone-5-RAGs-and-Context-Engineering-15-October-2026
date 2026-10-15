@@ -75,6 +75,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
+def orange_heading(text: str) -> None:
+    """Section heading in the brand orange (Reviews Intelligence tab)."""
+    st.markdown(
+        f'<h3 style="color:#FF7A00; font-size:1.25rem; font-weight:600; '
+        f'margin:.5rem 0 .35rem 0;">{text}</h3>',
+        unsafe_allow_html=True,
+    )
+
+
 # --------------------------------------------------------------------------- state
 # The gate MUST persist across Streamlit reruns — otherwise an approved token is
 # lost on rerun and the MCP tools would refuse to run.
@@ -285,7 +295,7 @@ with tabs[0]:
 
     left, right = st.columns([3, 2], gap="large")
     with left:
-        st.subheader("Themes (max 5)")
+        orange_heading("Themes (max 5)")
         show = dist.assign(**{"top 3": dist["theme"].isin(ins["top_themes"]).map({True: "⭐", False: ""})})
         st.dataframe(
             show,
@@ -298,24 +308,24 @@ with tabs[0]:
             },
         )
     with right:
-        st.subheader("Reviews by rating")
+        orange_heading("Reviews by rating")
         rc = df["rating"].value_counts().sort_index()
         rc.index = [f"{int(r)}★" for r in rc.index]
         st.bar_chart(rc, height=270)
 
-    st.subheader("Top 3 themes")
+    orange_heading("Top 3 themes")
     for i, t in enumerate(ins["top_themes"], 1):
         row = next(d for d in ins["theme_distribution"] if d["theme"] == t)
         st.markdown(f"**{i}. {t}** — {row['count']} reviews ({row['share_pct']:.0f}%)  \n_{config.THEME_MEANINGS.get(t, '')}_")
 
-    st.subheader("Real user quotes (verbatim, redacted)")
+    orange_heading("Real user quotes (verbatim, redacted)")
     for q in ins["top_quotes"]:
         with st.container(border=True):
             st.markdown(f"> {q['text']}")
             stars = "★" * int(q["rating"]) + "☆" * (5 - int(q["rating"]))
             st.caption(f"{stars} · {q['week']} · theme: {q['theme']}")
 
-    st.subheader("🎯 Recurring confusion / fee pain point")
+    orange_heading("🎯 Recurring confusion / fee pain point")
     fee = ins["fee_issue"]
     st.error(
         f"**{fee['label']}** — detected in **{fee['evidence_count']}** reviews.\n\n"

@@ -642,6 +642,10 @@ Everything below is written inside the matching `with tabs[i]:` block.
 ### S9 — Tab 1: Review Intelligence
 ```
 Inside tabs[0]:
+- Render the five section headings ("Themes (max 5)", "Reviews by rating", "Top 3 themes",
+  "Real user quotes (verbatim, redacted)", "🎯 Recurring confusion / fee pain point") in the brand
+  orange via a small `orange_heading(text)` helper (st.markdown with
+  `<h3 style="color:#FF7A00">`).
 - Theme scorecards: st.columns(3) of st.metric — one per ins["top_themes"], value =
   f"{count} reviews", delta = f"{share_pct:.0f}% of reviews" (delta_color "off").
 - Then st.columns([3, 2], gap="large"):
