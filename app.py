@@ -58,10 +58,7 @@ st.markdown(
           border-radius: 12px;
           padding: .6rem .9rem;
       }
-      /* Header metric cards: uniform height + bold text. */
-      [data-testid="stMetric"] {min-height: 88px;}
-      [data-testid="stMetricValue"] {font-size: 1.45rem; font-weight: 700;}
-      [data-testid="stMetricLabel"], [data-testid="stMetricLabel"] * {font-weight: 700;}
+      [data-testid="stMetricValue"] {font-size: 1.45rem;}
 
       /* Sidebar: title, section headers ("Reviews source", "LLM") and status text in orange. */
       [data-testid="stSidebar"] h1,
@@ -266,10 +263,10 @@ with header_slot:
         f"writer: **{'Gemini' if p['llm'] else 'offline'}**"
     )
     k1, k2, k3, k4 = st.columns(4)
-    k1.metric("Reviews Analysed", ins["total_reviews"])
+    k1.metric("Reviews analysed", ins["total_reviews"])
     k2.metric("Window", f"{ins['window_weeks']} wks")
-    k3.metric("Avg Rating", f"{ins['avg_rating']} out of 5")
-    k4.metric("Fee Issue Evidence", ins["fee_issue"]["evidence_count"])
+    k3.metric("Avg rating", ins["avg_rating"], "out of 5", delta_color="off")
+    k4.metric("Fee issue evidence", ins["fee_issue"]["evidence_count"])
 
 tabs = st.tabs(
     ["🧭 Review Intelligence", "🗞️ Weekly Pulse", "💸 Fee Explainer", "🔐 MCP Approval", "📦 Deliverables"]
