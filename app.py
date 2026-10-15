@@ -54,15 +54,36 @@ st.markdown(
     <style>
       .block-container {padding-top: 2.2rem;}
       [data-testid="stMetric"] {
-          border: 1px solid rgba(128,128,128,.25);
+          border: 1px solid rgba(255,122,0,.35);
           border-radius: 12px;
           padding: .6rem .9rem;
       }
       [data-testid="stMetricValue"] {font-size: 1.45rem;}
+
+      /* Sidebar: title, section headers ("Reviews source", "LLM") and status text in orange. */
+      [data-testid="stSidebar"] h1,
+      [data-testid="stSidebar"] h2,
+      [data-testid="stSidebar"] h3 { color: #FF7A00; }
+      [data-testid="stSidebar"] [data-testid="stAlert"],
+      [data-testid="stSidebar"] [data-testid="stAlert"] * { color: #FF7A00 !important; }
+
+      /* ...except the "Gemini key detected — live text." success message, which stays black. */
+      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"],
+      [data-testid="stSidebar"] [data-testid="stAlert"] [data-testid="stAlertContentSuccess"] * { color: #000000 !important; }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+
+def orange_heading(text: str) -> None:
+    """Section heading in the brand orange (Reviews Intelligence tab)."""
+    st.markdown(
+        f'<h3 style="color:#FF7A00; font-size:1.25rem; font-weight:600; '
+        f'margin:.5rem 0 .35rem 0;">{text}</h3>',
+        unsafe_allow_html=True,
+    )
+
 
 # --------------------------------------------------------------------------- state
 # The gate MUST persist across Streamlit reruns — otherwise an approved token is
@@ -75,12 +96,27 @@ gate: ApprovalGate = st.session_state.gate
 
 
 # --------------------------------------------------------------------------- pipeline
-def run_pipeline(df: pd.DataFrame, weeks: int) -> dict:
+def run_pipeline(df: pd.DataFrame, weeks: int, progress=None) -> dict:
+    """Run every stage in order. `progress(msg)` (optional) reports each step to the UI."""
+    def emit(msg: str) -> None:
+        if progress is not None:
+            progress(msg)
+
     df = cluster_mod.run(df)
+    emit(f"✅ Themed into {df['theme'].nunique()} clusters")
+
     ins = insights_mod.run(df, weeks)
+    emit(f"✅ Insights — top themes: {', '.join(ins['top_themes'])}")
+
     ctx = retrieval.run(df, ins["fee_issue"]["label"])
+    emit(f"✅ Retrieved {len(ctx)} RAG context reviews for “{ins['fee_issue']['label']}”")
+
     p = pulse.run(ins, ctx)
+    emit(f"✅ Weekly pulse written ({p['word_count']}/{config.MAX_PULSE_WORDS} words)")
+
     fx = fee_explainer.run(ins, ctx)
+    emit(f"✅ Fee explainer written ({len(fx['bullets'])}/{config.MAX_EXPLAINER_BULLETS} bullets)")
+
     return {"df": df, "insights": ins, "context": ctx, "pulse": p, "explainer": fx}
 
 
@@ -141,9 +177,23 @@ with st.sidebar:
         st.session_state.action_results = None
         st.success(f"Reset — removed {len(removed)} file(s). Run analysis again to rebuild.")
 
+st.markdown(
+    '<h1 style="color:#FF7A00; margin:0 0 .35rem 0; font-weight:800;">'
+    "📈 Groww — Review Insights Analyser</h1>",
+    unsafe_allow_html=True,
+)
+
+# Fixed-position containers: the run-progress panel lives BELOW the header/metric cards
+# (containers render in creation order regardless of when they get filled). status_slot is an
+# st.empty() placeholder so the progress panel can be cleared once the run finishes.
+header_slot = st.container()
+status_slot = st.empty()
+
 if run_clicked:
-    with st.spinner("Running ingest → cluster → insights → retrieve → pulse → explainer…"):
+    completed = False
+    with status_slot.container(), st.status("Running analysis…", expanded=True) as status:
         try:
+            src = "uploaded CSV" if uploaded is not None else config.SAMPLE_REVIEWS.name
             if uploaded is not None:
                 config.RAW_DIR.mkdir(parents=True, exist_ok=True)
                 up = config.RAW_DIR / "uploaded_reviews.csv"
@@ -151,13 +201,22 @@ if run_clicked:
                 df = ingest.load_reviews(up, weeks)
             else:
                 df = ingest.load_reviews(config.SAMPLE_REVIEWS, weeks)
-            st.session_state.results = run_pipeline(df, weeks)
+            st.write(
+                f"✅ Ingested `{src}` — {len(df)} reviews kept "
+                f"({df.attrs.get('redactions', 0)} PII redactions)"
+            )
+
+            st.session_state.results = run_pipeline(df, weeks, progress=st.write)
             st.session_state.action_results = None
+            status.update(label="Analysis complete ✅", state="complete", expanded=False)
+            completed = True
         except Exception as exc:  # noqa: BLE001
+            status.update(label="Pipeline failed ❌", state="error", expanded=True)
             st.error(f"Pipeline failed: {exc}")
+    if completed:
+        status_slot.empty()  # panel served its purpose — vanish so results take the stage
 
 if st.session_state.results is None:
-    st.title("📈 Groww — Review Insights Analyser")
     st.markdown(
         "Turn the last **8–12 weeks** of App Store + Play Store reviews into a **weekly product "
         "pulse** and a **customer-facing fee explainer** — then log them through an **MCP approval gate**."
@@ -208,16 +267,16 @@ R = st.session_state.results
 ins, ctx, p, fx, df = R["insights"], R["context"], R["pulse"], R["explainer"], R["df"]
 
 # --------------------------------------------------------------------------- header
-st.title("Groww — Review Insights Analyser")
-st.caption(
-    f"Window **{ins['window_start']} → {ins['window_end']}** · source `{ins.get('source_file', 'n/a')}` · "
-    f"writer: **{'Gemini' if p['llm'] else 'offline'}**"
-)
-k1, k2, k3, k4 = st.columns(4)
-k1.metric("Reviews analysed", ins["total_reviews"])
-k2.metric("Window", f"{ins['window_weeks']} wks")
-k3.metric("Avg rating", ins["avg_rating"], "out of 5", delta_color="off")
-k4.metric("Fee issue evidence", ins["fee_issue"]["evidence_count"])
+with header_slot:
+    st.caption(
+        f"Window **{ins['window_start']} → {ins['window_end']}** · source `{ins.get('source_file', 'n/a')}` · "
+        f"writer: **{'Gemini' if p['llm'] else 'offline'}**"
+    )
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("Reviews Analysed", ins["total_reviews"])
+    k2.metric("Window", f"{ins['window_weeks']} wks")
+    k3.metric("Avg Rating", f"{ins['avg_rating']} out of 5")
+    k4.metric("Fee Issue Evidence", ins["fee_issue"]["evidence_count"])
 
 tabs = st.tabs(
     ["🧭 Review Intelligence", "🗞️ Weekly Pulse", "💸 Fee Explainer", "🔐 MCP Approval", "📦 Deliverables"]
@@ -236,7 +295,7 @@ with tabs[0]:
 
     left, right = st.columns([3, 2], gap="large")
     with left:
-        st.subheader("Themes (max 5)")
+        orange_heading("Themes (max 5)")
         show = dist.assign(**{"top 3": dist["theme"].isin(ins["top_themes"]).map({True: "⭐", False: ""})})
         st.dataframe(
             show,
@@ -249,24 +308,24 @@ with tabs[0]:
             },
         )
     with right:
-        st.subheader("Reviews by rating")
+        orange_heading("Reviews by rating")
         rc = df["rating"].value_counts().sort_index()
         rc.index = [f"{int(r)}★" for r in rc.index]
         st.bar_chart(rc, height=270)
 
-    st.subheader("Top 3 themes")
+    orange_heading("Top 3 themes")
     for i, t in enumerate(ins["top_themes"], 1):
         row = next(d for d in ins["theme_distribution"] if d["theme"] == t)
         st.markdown(f"**{i}. {t}** — {row['count']} reviews ({row['share_pct']:.0f}%)  \n_{config.THEME_MEANINGS.get(t, '')}_")
 
-    st.subheader("Real user quotes (verbatim, redacted)")
+    orange_heading("Real user quotes (verbatim, redacted)")
     for q in ins["top_quotes"]:
         with st.container(border=True):
             st.markdown(f"> {q['text']}")
             stars = "★" * int(q["rating"]) + "☆" * (5 - int(q["rating"]))
             st.caption(f"{stars} · {q['week']} · theme: {q['theme']}")
 
-    st.subheader("🎯 Recurring confusion / fee pain point")
+    orange_heading("🎯 Recurring confusion / fee pain point")
     fee = ins["fee_issue"]
     st.error(
         f"**{fee['label']}** — detected in **{fee['evidence_count']}** reviews.\n\n"

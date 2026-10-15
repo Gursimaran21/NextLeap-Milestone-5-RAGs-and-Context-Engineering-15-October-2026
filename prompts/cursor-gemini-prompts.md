@@ -552,6 +552,10 @@ Add run_pipeline(df, weeks) -> dict that calls, in order:
   -> pulse.run(ins, ctx) -> fee_explainer.run(ins, ctx)
 Return {"df":..., "insights":..., "context":..., "pulse":..., "explainer":...}.
 It must reuse the existing src functions only — no logic duplicated in the app.
+Add an optional `progress=None` callback; after each stage call `progress("<message>")`
+(guard for None) so the UI can stream step-by-step updates — e.g. themed cluster count,
+top themes, retrieved context count, pulse word count vs config.MAX_PULSE_WORDS, and
+bullet count vs config.MAX_EXPLAINER_BULLETS.
 ```
 
 ### S4 — Sidebar (source, window, run button, LLM status)
@@ -575,20 +579,33 @@ Add `with st.sidebar:`:
 
 ### S5 — Run handler
 ```
-Handle run_clicked:
+Handle run_clicked inside a live status panel (NOT a single st.spinner):
+`with st.status("Running analysis…", expanded=True) as status:` and a try/except:
 - If a file was uploaded, save its bytes to data/raw/uploaded_reviews.csv and call
   ingest.load_reviews(that_path, weeks); otherwise ingest.load_reviews(config.SAMPLE_REVIEWS, weeks).
-- Wrap everything in `with st.spinner("Running ingest → cluster → insights → retrieve → pulse → explainer…")`
-  and a try/except that calls st.error(f"Pipeline failed: {exc}").
-- On success store st.session_state.results = run_pipeline(df, weeks) and reset
-  st.session_state.action_results = None.
+  Then st.write a "✅ Ingested <src> — N reviews kept (M PII redactions)" line.
+- st.session_state.results = run_pipeline(df, weeks, progress=st.write) so each stage
+  streams a line into the panel; reset st.session_state.action_results = None.
+- On success: status.update(label="Analysis complete ✅", state="complete", expanded=False).
+- On failure: status.update(label="Pipeline failed", state="error", expanded=True) and
+  st.error(f"Pipeline failed: {exc}").
+Layout: render the page title ONCE as an orange heading — `st.markdown('<h1 style="color:#FF7A00;
+margin:0 0 .35rem 0; font-weight:800;">📈 Groww — Review Insights Analyser</h1>',
+unsafe_allow_html=True)` — before this handler, then create two fixed-position slots in
+display order —
+`header_slot = st.container()` then `status_slot = st.empty()`. Run the pipeline inside
+`with status_slot.container(), st.status(...) as status:`. Later render the caption + metric
+cards inside `with header_slot:`. Containers/slots render in creation order regardless of when
+they are filled, so the progress panel sits BELOW the header/metric cards and ABOVE the tabs.
+The progress panel is TRANSIENT: track a local `completed` flag, and after a successful run call
+`status_slot.empty()` so the panel DISAPPEARS once results are ready (leave it visible on error
+so the failure is readable). Do not duplicate the title in the landing or results branch.
 ```
 
 ### S6 — Landing (empty) state
 ```
-If st.session_state.results is None, render a rich welcome and st.stop() so the rest of the
 app never runs before the pipeline has produced results:
-- Title "📈 Groww — Review Insights Analyser" + a one-line summary of the flow.
+- One-line summary of the flow (the page title is already rendered once, above this branch).
 - st.columns(4) with "#### 1..4" cards: Review intelligence / Weekly pulse / Fee explainer /
   MCP gate.
 - st.divider(), then st.columns([3, 2], gap="large"):
@@ -608,9 +625,10 @@ After the guard, unpack:
   ins, ctx, p, fx, df = R["insights"], R["context"], R["pulse"], R["explainer"], R["df"]
 Then a title, a st.caption showing the window (ins["window_start"] → ins["window_end"]),
 the source file and the writer (Gemini vs offline), and 4 metric columns (st.metric):
-  Reviews analysed = ins["total_reviews"]; Window = f"{ins['window_weeks']} wks";
-  Avg rating = ins["avg_rating"] (delta "out of 5", delta_color "off");
-  Fee issue evidence = ins["fee_issue"]["evidence_count"].
+  Reviews Analysed = ins["total_reviews"]; Window = f"{ins['window_weeks']} wks";
+  Avg Rating = f"{ins['avg_rating']} out of 5"; Fee Issue Evidence = ins["fee_issue"]["evidence_count"].
+Keep "out of 5" inline in the value (no delta) so the Avg Rating box is the same height as the
+other three.
 ```
 
 ### S8 — Tab container
@@ -624,6 +642,10 @@ Everything below is written inside the matching `with tabs[i]:` block.
 ### S9 — Tab 1: Review Intelligence
 ```
 Inside tabs[0]:
+- Render the five section headings ("Themes (max 5)", "Reviews by rating", "Top 3 themes",
+  "Real user quotes (verbatim, redacted)", "🎯 Recurring confusion / fee pain point") in the brand
+  orange via a small `orange_heading(text)` helper (st.markdown with
+  `<h3 style="color:#FF7A00">`).
 - Theme scorecards: st.columns(3) of st.metric — one per ins["top_themes"], value =
   f"{count} reviews", delta = f"{share_pct:.0f}% of reviews" (delta_color "off").
 - Then st.columns([3, 2], gap="large"):
@@ -792,8 +814,13 @@ Yes — the local http://localhost:8501 URL can become a permanent Streamlit URL
 Code prep:
 - Add requirements-cloud.txt: `-r requirements.txt` plus `google-genai>=0.3` (so live
   Gemini text works on Cloud; locally Gemini stays optional).
-- Add .streamlit/config.toml with a brand theme (primaryColor "#00b386") and
-  [browser] gatherUsageStats = false.
+- Add .streamlit/config.toml with a warm orange theme (primaryColor "#FF7A00",
+  backgroundColor "#FFF9F2", secondaryBackgroundColor "#FFEDD8", textColor "#000000") and
+  [browser] gatherUsageStats = false. In app.py the main page heading is an orange <h1>
+  (#FF7A00); body/data text stays black for readability. The main page heading, the sidebar
+  title ("📈 Groww — M5"), the sidebar section headers ("1 · Reviews source", "2 · LLM") and the
+  sidebar LLM status text are orange (#FF7A00) — except the "Gemini key detected — live text."
+  success message, which is forced to black (#000000) via [data-testid="stAlertContentSuccess"].
 - Add .gitignore excluding .env, .streamlit/secrets.toml, __pycache__/, data/raw/*.csv
   (may contain PII) and generated logs (outputs/*.jsonl, mcp/approval_log.jsonl).
 - In app.py, right after load_dotenv(), bridge Streamlit secrets into the environment:
