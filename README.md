@@ -165,7 +165,7 @@ and each review keeps the label its text actually matches (95% agreement with th
 
 ## Sample outputs
 
-From the committed sample: `python -m src.run_all --weeks 12` → **43 reviews**, 12-week window
+From the full 12-week export: `python -m src.run_all --weeks 12` → **43 reviews**, 12-week window
 (2026-07-19 → 2026-10-11), average **2.35★**.
 
 **`outputs/weekly_pulse.md`** — 238 words (cap 250):
@@ -203,18 +203,24 @@ body = the pulse + the reusable support snippet. **Draft only.**
 
 Frozen copies of the generated artifacts are committed as `outputs/*_sample.md`.
 
-### Screenshots (add before submitting)
+### Screenshots
 
-Capture these from `streamlit run app.py` and drop the files in `docs/img/`:
+Live run of `streamlit run app.py` on the built-in sample (sidebar → **Run analysis**):
 
-| # | Screen | Suggested file |
-|---|---|---|
-| 1 | Landing + sidebar (light-grey, "Gemini key detected") | `docs/img/01-landing.png` |
-| 2 | **Review Intelligence** — themes, 3 quotes, red fee box | `docs/img/02-review-intelligence.png` |
-| 3 | **Weekly Pulse** tab | `docs/img/03-weekly-pulse.png` |
-| 4 | **Fee Explainer** tab | `docs/img/04-fee-explainer.png` |
-| 5 | **MCP Approval** — payload *before* approving | `docs/img/05-approval-payload.png` |
-| 6 | Result cards + approval log after **Approve & Execute** | `docs/img/06-after-approval.png` |
+| Landing | Review Intelligence |
+|---|---|
+| ![Landing screen with sidebar](docs/img/01-landing.png) | ![Review Intelligence tab](docs/img/02-review-intelligence.png) |
+
+| Weekly Pulse | Fee Explainer |
+|---|---|
+| ![Weekly Pulse tab](docs/img/03-weekly-pulse.png) | ![Fee Explainer tab](docs/img/04-fee-explainer.png) |
+
+| MCP Approval — payload, nothing written yet | Deliverables & compliance |
+|---|---|
+| ![MCP approval payload](docs/img/05-mcp-approval-payload.png) | ![Deliverables checklist](docs/img/06-deliverables.png) |
+
+> The screenshots show the app's built-in **40-review** sample (14 fee matches, 223-word pulse).
+> The repo-canonical `run_all` over the full **43-row** export gives 17 matches — see above.
 
 ---
 

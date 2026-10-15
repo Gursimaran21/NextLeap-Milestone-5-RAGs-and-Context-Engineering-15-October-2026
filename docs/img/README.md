@@ -1,16 +1,17 @@
 # Screenshots
 
-Drop the demo screenshots here (referenced from the top-level `README.md`).
-
-Run the app with `streamlit run app.py`, then capture:
+Captured from a live run of `streamlit run app.py` (built-in 40-review sample).
 
 | File | Screen |
 |---|---|
-| `01-landing.png` | Landing + sidebar (light-grey, "Gemini key detected — live text.") |
-| `02-review-intelligence.png` | Review Intelligence tab — themes, 3 quotes, red fee-pain box |
-| `03-weekly-pulse.png` | Weekly Pulse tab |
-| `04-fee-explainer.png` | Fee Explainer tab |
-| `05-approval-payload.png` | MCP Approval tab — payload **before** approving |
-| `06-after-approval.png` | Result cards + approval log after **Approve & Execute** |
+| `01-landing.png` | Landing + "How it works" + enforced-constraints list |
+| `02-review-intelligence.png` | Review Intelligence — themes, top 3, 3 real quotes, fee-pain box, RAG context |
+| `03-weekly-pulse.png` | Weekly Pulse — 223/250 words |
+| `04-fee-explainer.png` | Fee Explainer — 6 bullets, 2 official links, "Last checked" |
+| `05-mcp-approval-payload.png` | MCP Approval — the exact payload, nothing written yet |
+| `06-deliverables.png` | Deliverables map + compliance checklist (all green) |
 
-PNG is fine; keep each under ~500 KB.
+Referenced from the top-level `README.md`.
+
+> The Streamlit "Print to PDF" versions of these live alongside the PNGs in the desktop
+> capture folder — only the PNGs are committed here.
